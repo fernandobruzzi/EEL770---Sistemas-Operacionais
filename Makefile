@@ -10,8 +10,8 @@ MIN_HAIRCUT_TIME ?= 1000
 MAX_HAIRCUT_TIME ?= 5000
 MIN_PAYMENT_TIME ?= 500
 MAX_PAYMENT_TIME ?= 2000
-MIN_ARRIVAL_TIME ?= 100
-MAX_ARRIVAL_TIME ?= 2000
+MIN_ARRIVAL_INTERVAL ?= 100
+MAX_ARRIVAL_INTERVAL ?= 2000
 VARIABILITY_FACTOR ?= 5
 
 # Detecção automática do sistema operacional e configuração do compilador
@@ -55,7 +55,7 @@ $(TARGET): $(SOURCE)
 	@echo "  - Lugares no sofá: $(SOFA_CAPACITY)"
 	@echo "  - Tempo de corte: $(MIN_HAIRCUT_TIME)-$(MAX_HAIRCUT_TIME)ms"
 	@echo "  - Tempo de pagamento: $(MIN_PAYMENT_TIME)-$(MAX_PAYMENT_TIME)ms"
-	@echo "  - Intervalo de chegada: $(MIN_ARRIVAL_TIME)-$(MAX_ARRIVAL_TIME)ms"
+	@echo "  - Intervalo de chegada: $(MIN_ARRIVAL_INTERVAL)-$(MAX_ARRIVAL_INTERVAL)ms"
 	@echo "  - Fator de variabilidade: $(VARIABILITY_FACTOR)/10"
 	@echo ""
 	$(CC) $(CFLAGS) $(DEFINES) -o $(TARGET) $(SOURCE) $(LDFLAGS)
@@ -85,11 +85,11 @@ slow:
 
 # Cenário de alta variabilidade
 variable:
-	$(MAKE) VARIABILITY_FACTOR=8 MIN_ARRIVAL_TIME=50 MAX_ARRIVAL_TIME=3000
+	$(MAKE) VARIABILITY_FACTOR=8 MIN_ARRIVAL_INTERVAL=50 MAX_ARRIVAL_INTERVAL=3000
 
 # Cenário de máxima variabilidade
 chaos:
-	$(MAKE) VARIABILITY_FACTOR=10 MIN_ARRIVAL_TIME=20 MAX_ARRIVAL_TIME=5000 MIN_HAIRCUT_TIME=500 MAX_HAIRCUT_TIME=8000
+	$(MAKE) VARIABILITY_FACTOR=10 MIN_ARRIVAL_INTERVAL=20 MAX_ARRIVAL_INTERVAL=5000 MIN_HAIRCUT_TIME=500 MAX_HAIRCUT_TIME=8000
 
 # Execução com diferentes configurações
 run: $(TARGET)
@@ -177,8 +177,8 @@ help:
 	@echo "  MAX_HAIRCUT_TIME  - Tempo máximo de corte em ms (padrão: 5000)"
 	@echo "  MIN_PAYMENT_TIME  - Tempo mínimo de pagamento em ms (padrão: 500)"
 	@echo "  MAX_PAYMENT_TIME  - Tempo máximo de pagamento em ms (padrão: 2000)"
-	@echo "  MIN_ARRIVAL_TIME  - Tempo mínimo entre chegadas em ms (padrão: 100)"
-	@echo "  MAX_ARRIVAL_TIME  - Tempo máximo entre chegadas em ms (padrão: 2000)"
+	@echo "  MIN_ARRIVAL_INTERVAL  - Tempo mínimo entre chegadas em ms (padrão: 100)"
+	@echo "  MAX_ARRIVAL_INTERVAL  - Tempo máximo entre chegadas em ms (padrão: 2000)"
 	@echo "  VARIABILITY_FACTOR- Fator de variabilidade 1-10 (padrão: 5)"
 
 # Torna as regras como phony (não criam arquivos)
